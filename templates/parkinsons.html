@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Parkinson's Disease Prediction</title>
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #8360c3, #2ebf91);
+        font-family: Arial;
+      }
+
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        width: 400px;
+        max-height: 90vh;
+        overflow-y: auto;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      input {
+        width: 90%;
+        padding: 8px;
+        margin: 6px 0;
+      }
+
+      button {
+        padding: 10px 20px;
+        background: #673ab7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #512da8;
+      }
+
+      .result-box {
+        margin-top: 20px;
+        padding: 15px;
+        background: #ede7f6;
+        border-radius: 10px;
+      }
+
+      .result-text {
+        font-size: 22px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>Parkinson's Disease Prediction</h2>
+
+      <form method="POST">
+        {% for feature in parkinsons_model.feature_names_in_ %}
+        <input
+          type="number"
+          step="any"
+          name="{{ feature }}"
+          placeholder="{{ feature }}"
+          value="{{ data.get(feature, '') }}"
+          required
+        />
+        {% endfor %}
+
+        <br />
+        <button type="submit">Predict</button>
+      </form>
+
+      <!-- ✅ RESULT -->
+      {% if result %}
+      <div class="result-box">
+        <h3>Prediction Result</h3>
+        <div
+          class="result-text"
+          style="color: {{ 'red' if 'Detected' in result else 'green' }}"
+        >
+          {{ result }}
+        </div>
+      </div>
+      {% endif %} {% if precautions %}
+      <div class="result-box">
+        <h3>Precautions</h3>
+        <ul style="text-align: left">
+          {% for p in precautions %}
+          <li>{{ p }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <br />
+      <a href="/dashboard">Back to Dashboard</a>
+    </div>
+  </body>
+</html>

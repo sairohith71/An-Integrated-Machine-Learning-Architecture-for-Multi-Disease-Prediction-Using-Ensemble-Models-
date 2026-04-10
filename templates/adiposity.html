@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+<title>Adiposity (Obesity) Prediction</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #43cea2, #185a9d);
+  font-family: Arial;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+input, select {
+  width: 90%;
+  padding: 8px;
+  margin: 6px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2e7d32;
+}
+
+.result-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e8f5e9;
+  border-radius: 10px;
+}
+
+.result-text {
+  font-size: 22px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h2>Adiposity (Obesity) Prediction</h2>
+
+<form method="POST">
+
+<input name="Age" placeholder="Age" value="{{ data.get('Age','') }}" required>
+<input name="Height" placeholder="Height (meters)" value="{{ data.get('Height','') }}" required>
+<input name="Weight" placeholder="Weight (kg)" value="{{ data.get('Weight','') }}" required>
+
+<select name="Gender">
+<option value="">Gender</option>
+<option value="Male" {% if data.get('Gender')=='Male' %}selected{% endif %}>Male</option>
+<option value="Female" {% if data.get('Gender')=='Female' %}selected{% endif %}>Female</option>
+</select>
+
+<select name="family_history_with_overweight">
+<option value="">Family History</option>
+<option value="yes" {% if data.get('family_history_with_overweight')=='yes' %}selected{% endif %}>Yes</option>
+<option value="no" {% if data.get('family_history_with_overweight')=='no' %}selected{% endif %}>No</option>
+</select>
+
+<select name="FAVC">
+<option value="">High Calorie Food</option>
+<option value="yes" {% if data.get('FAVC')=='yes' %}selected{% endif %}>Yes</option>
+<option value="no" {% if data.get('FAVC')=='no' %}selected{% endif %}>No</option>
+</select>
+
+<input name="FCVC" placeholder="Vegetable Consumption" value="{{ data.get('FCVC','') }}">
+<input name="NCP" placeholder="Meals per day" value="{{ data.get('NCP','') }}">
+
+<select name="CAEC">
+<option value="">Snacking</option>
+<option value="no" {% if data.get('CAEC')=='no' %}selected{% endif %}>No</option>
+<option value="Sometimes" {% if data.get('CAEC')=='Sometimes' %}selected{% endif %}>Sometimes</option>
+<option value="Frequently" {% if data.get('CAEC')=='Frequently' %}selected{% endif %}>Frequently</option>
+<option value="Always" {% if data.get('CAEC')=='Always' %}selected{% endif %}>Always</option>
+</select>
+
+<select name="SMOKE">
+<option value="">Smoking</option>
+<option value="yes" {% if data.get('SMOKE')=='yes' %}selected{% endif %}>Yes</option>
+<option value="no" {% if data.get('SMOKE')=='no' %}selected{% endif %}>No</option>
+</select>
+
+<input name="CH2O" placeholder="Water Intake (liters)" value="{{ data.get('CH2O','') }}">
+
+<select name="SCC">
+<option value="">Monitor Calories</option>
+<option value="yes" {% if data.get('SCC')=='yes' %}selected{% endif %}>Yes</option>
+<option value="no" {% if data.get('SCC')=='no' %}selected{% endif %}>No</option>
+</select>
+
+<input name="FAF" placeholder="Physical Activity (hours/week)" value="{{ data.get('FAF','') }}">
+<input name="TUE" placeholder="Screen Time (hours/day)" value="{{ data.get('TUE','') }}">
+
+<select name="CALC">
+<option value="">Alcohol</option>
+<option value="no" {% if data.get('CALC')=='no' %}selected{% endif %}>No</option>
+<option value="Sometimes" {% if data.get('CALC')=='Sometimes' %}selected{% endif %}>Sometimes</option>
+<option value="Frequently" {% if data.get('CALC')=='Frequently' %}selected{% endif %}>Frequently</option>
+<option value="Always" {% if data.get('CALC')=='Always' %}selected{% endif %}>Always</option>
+</select>
+
+<select name="MTRANS">
+<option value="">Transport</option>
+<option value="Walking" {% if data.get('MTRANS')=='Walking' %}selected{% endif %}>Walking</option>
+<option value="Bike" {% if data.get('MTRANS')=='Bike' %}selected{% endif %}>Bike</option>
+<option value="Motorbike" {% if data.get('MTRANS')=='Motorbike' %}selected{% endif %}>Motorbike</option>
+<option value="Automobile" {% if data.get('MTRANS')=='Automobile' %}selected{% endif %}>Car</option>
+<option value="Public_Transportation" {% if data.get('MTRANS')=='Public_Transportation' %}selected{% endif %}>Public</option>
+</select>
+
+<br>
+<button type="submit">Predict</button>
+</form>
+
+{% if result %}
+<div class="result-box">
+<h3>Prediction Result</h3>
+<div class="result-text">{{ result }}</div>
+</div>
+{% endif %}
+
+{% if precautions %}
+<div class="result-box">
+  <h3>Precautions</h3>
+  <ul style="text-align:left;">
+    {% for p in precautions %}
+    <li>{{ p }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+<br>
+<a href="/dashboard">Back to Dashboard</a>
+
+</div>
+</body>
+</html>

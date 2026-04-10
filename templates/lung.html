@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<title>Lung Cancer Prediction</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: Arial;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: center;
+}
+
+select, input {
+  width: 90%;
+  padding: 8px;
+  margin: 6px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  background: #673ab7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #512da8;
+}
+
+.result-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: #ede7f6;
+  border-radius: 10px;
+}
+
+.result-text {
+  font-size: 22px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h2>Lung Cancer Prediction</h2>
+
+<form method="POST">
+
+<!-- GENDER -->
+<select name="GENDER" required>
+  <option value="">Gender</option>
+  <option value="M" {{ 'selected' if data.get('GENDER')=='M' else '' }}>Male</option>
+  <option value="F" {{ 'selected' if data.get('GENDER')=='F' else '' }}>Female</option>
+</select>
+
+<!-- AGE -->
+<input type="number" name="AGE" placeholder="Age"
+value="{{ data.get('AGE','') }}" required>
+
+<!-- FIELDS -->
+{% set fields = [
+"SMOKING","YELLOW_FINGERS","ANXIETY","PEER_PRESSURE",
+"CHRONIC DISEASE","FATIGUE","ALLERGY","WHEEZING",
+"ALCOHOL CONSUMING","COUGHING","SHORTNESS OF BREATH",
+"SWALLOWING DIFFICULTY","CHEST PAIN"
+] %}
+
+{% for field in fields %}
+<select name="{{ field }}" required>
+  <option value="">{{ field }}</option>
+
+  <!-- YES -->
+  <option value="1" {{ 'selected' if data.get(field)=='1' else '' }}>
+    Yes
+  </option>
+
+  <!-- NO -->
+  <option value="2" {{ 'selected' if data.get(field)=='2' else '' }}>
+    No
+  </option>
+</select>
+{% endfor %}
+
+<br>
+<button type="submit">Predict</button>
+
+</form>
+
+<!-- RESULT -->
+{% if result %}
+<div class="result-box">
+  <h3>Prediction Result</h3>
+  <div class="result-text"
+       style="color: {{ 'red' if 'Detected' in result else 'green' }}">
+    {{ result }}
+  </div>
+</div>
+
+<!-- PRECAUTIONS -->
+<div class="result-box">
+  <h3>Precautions</h3>
+
+  {% if precautions %}
+  <ul style="text-align:left;">
+    {% for p in precautions %}
+    <li>{{ p }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No precautions needed 👍</p>
+  {% endif %}
+
+</div>
+{% endif %}
+
+<br>
+<a href="/dashboard">Back to Dashboard</a>
+
+</div>
+</body>
+</html>

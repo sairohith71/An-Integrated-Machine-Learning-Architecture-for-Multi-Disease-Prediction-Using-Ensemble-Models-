@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Dashboard</title>
+
+    <style>
+      body {
+        font-family: Arial;
+        margin: 0;
+        background: linear-gradient(135deg, #1f4037, #99f2c8);
+        color: white;
+        text-align: center;
+      }
+
+      h1 {
+        padding-top: 25px;
+        font-size: 34px;
+      }
+
+      h2 {
+        margin-bottom: 25px;
+        font-weight: normal;
+      }
+
+      /* GRID */
+      .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 25px;
+        padding: 20px;
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      /* CARD */
+      .card {
+        background: white;
+        color: black;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        transition: 0.3s;
+        text-decoration: none;
+      }
+
+      .card:hover {
+        transform: translateY(-8px) scale(1.05);
+        background: #f1f8e9;
+      }
+
+      /* ICON */
+      .icon {
+        font-size: 45px;
+        margin-bottom: 10px;
+      }
+
+      /* TEXT */
+      .card h3 {
+        margin: 10px 0;
+      }
+
+      .card p {
+        font-size: 14px;
+        color: #555;
+      }
+
+      /* FOOTER */
+      .footer {
+        margin-top: 30px;
+        font-size: 13px;
+        color: #e0f2f1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>🩺 Multi Disease Prediction System</h1>
+    <h2>Select a Disease Module 👇</h2>
+
+    <div class="container">
+      <a href="/diabetes" class="card">
+        <div class="icon">🩸</div>
+        <h3>Diabetes</h3>
+        <p>Predict diabetes risk</p>
+      </a>
+
+      <a href="/lung" class="card">
+        <div class="icon">🫁</div>
+        <h3>Lung Cancer</h3>
+        <p>Check lung condition</p>
+      </a>
+
+      <a href="/breast" class="card">
+        <div class="icon">🎗️</div>
+        <h3>Breast Cancer</h3>
+        <p>Early detection</p>
+      </a>
+
+      <a href="/adiposity" class="card">
+        <div class="icon">⚖️</div>
+        <h3>Adiposity</h3>
+        <p>Obesity prediction</p>
+      </a>
+
+      <a href="/parkinsons" class="card">
+        <div class="icon">🧠</div>
+        <h3>Parkinson’s</h3>
+        <p>Neurological analysis</p>
+      </a>
+    </div>
+
+    <div class="footer">🚀 Developed for Major Project | AI + Healthcare</div>
+  </body>
+</html>

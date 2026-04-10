@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Diabetes Prediction</title>
+
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* ✅ Background Image + Overlay */
+        background:
+          linear-gradient(rgba(150, 26, 26, 0.6), rgba(170, 40, 40, 0.6)),
+          url("https://images.unsplash.com/photo-1588776814546-ec7e01b4a9a6");
+
+        background-size: cover;
+        background-position: center;
+        font-family: Arial;
+      }
+
+      /* Glass effect container */
+      .container {
+        background: rgba(226, 220, 220, 0.95);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        width: 400px;
+        max-height: 90vh;
+        overflow-y: auto;
+        text-align: center;
+        backdrop-filter: blur(10px);
+      }
+
+      h2 {
+        margin-bottom: 15px;
+      }
+
+      input {
+        width: 90%;
+        padding: 10px;
+        margin: 6px 0;
+        border-radius: 6px;
+        border: 1px solid #8f2d2d;
+      }
+
+      button {
+        padding: 10px 20px;
+        background: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #0b7dda;
+      }
+
+      .result-box {
+        margin-top: 20px;
+        padding: 15px;
+        background: #e3f2fd;
+        border-radius: 10px;
+      }
+
+      .result-text {
+        font-size: 22px;
+        font-weight: bold;
+        color: #0b7dda;
+      }
+
+      /* Back button styling */
+      a {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 15px;
+        background: #185a9d;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>Diabetes Prediction</h2>
+
+      <form method="POST">
+        <input
+          type="number"
+          step="any"
+          name="pregnancies"
+          value="{{ data.get('pregnancies','') }}"
+          placeholder="Pregnancies"
+          required
+        />
+
+        <input
+          type="number"
+          step="any"
+          name="glucose"
+          value="{{ data.get('glucose','') }}"
+          placeholder="Glucose Level"
+          required
+        />
+
+        <input
+          type="number"
+          step="any"
+          name="bloodpressure"
+          value="{{ data.get('bloodpressure','') }}"
+          placeholder="Blood Pressure"
+          required
+        />
+
+        <input
+          type="number"
+          step="any"
+          name="skinthickness"
+          value="{{ data.get('skinthickness','') }}"
+          placeholder="Skin Thickness"
+          required
+        />
+
+        <input
+          type="number"
+          step="any"
+          name="insulin"
+          value="{{ data.get('insulin','') }}"
+          placeholder="Insulin Level"
+          required
+        />
+
+        <input
+          type="number"
+          step="any"
+          name="bmi"
+          value="{{ data.get('bmi','') }}"
+          placeholder="BMI"
+          required
+        />
+
+        <input
+          type="number"
+          step="any"
+          name="dpf"
+          value="{{ data.get('dpf','') }}"
+          placeholder="Diabetes Pedigree Function"
+          required
+        />
+
+        <input
+          type="number"
+          step="any"
+          name="age"
+          value="{{ data.get('age','') }}"
+          placeholder="Age"
+          required
+        />
+
+        <br />
+        <button type="submit">Predict</button>
+      </form>
+
+      {% if result %}
+      <div class="result-box">
+        <h3>Prediction Result</h3>
+        <div class="result-text">{{ result }}</div>
+      </div>
+      {% endif %} {% if precautions %}
+      <div class="result-box">
+        <h3>Precautions</h3>
+        <ul style="text-align: left">
+          {% for p in precautions %}
+          <li>{{ p }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <a href="/dashboard">Back to Dashboard</a>
+    </div>
+  </body>
+</html>
